@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Winner 9</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div>
+    <div id="decoration">
+      <h1 class="gameName"><span style="color:red">&Star; </span>Winner 9<span style="color:red"> &Star;</span>
+      </h1>
+    </div>
+
+    <div class="horizontal-line">
+    </div>
+
+    <div name="">
+    <div class="flex-container" id="cardRow">
+      <div class="vertical-card" id="playerFirst">
+        <span class="suit"></span>
+        <span class="image"></span>
+      </div>
+      <div class="vertical-card" id="playerSecond">
+        <span class="suit"></span>
+        <span class="image"></span>
+      </div>
+      <div class="vertical-card" id="playerThird">
+        <span class="suit"></span>
+        <span class="image"></span>
+      </div>
+      <div class="vertical-line"></div>
+      <div class="vertical-card" id="computerFirst"></div>
+      <div class="vertical-card" id="computerSecond"></div>
+      <div class="vertical-card" id="computerThird"></div>
+    </div>
+
+    <div class="flex-container">
+      <div>
+        <h1>
+          <span style="color:lightblue">Player</span>
+        </h1>
+      </div>
+      <div>
+        <h1>
+          <span style="color:purple">Computer</span>
+        </h1>
+      </div>
+    </div>
+
+    <div class="horizontal-line">
+    </div>
+    <br/>
+
+    <div id="middleBox" class="flex-container">
+      <form>
+        <span style="color:black">First to win 3 rounds is the Winner!</span>
+     
+      </form>
+    </div>
+
+    <div class="horizontal-line">
+    </div>
+    <br/>
+
+    <div class="flex-container">
+      <div>
+        <h1 style="color:lightblue">Player Rounds Won: <span id="showPlayerRoundsWon"></span>
+        
+        </h1>
+      </div>
+      <div class="vertical-line2">
+      </div>
+      <div>
+        <h1 style="color:purple">Computer Rounds Won: <span id="showComputerRoundsWon"></span>
+        </h1>
+      </div>
+    </div>
+
+    <div class="horizontal-line">
+    </div>
+    <br/>
+
+    <div style="text-align:center">
+      <span style="color:yellow">Player?</span>
+      <span style="color:yellow" id="myChipTotal"></span>
+      <span style="color:yellow">Computer?</span>
+      
+    </div>
+
+    <div class="horizontal-line">
+    </div>
+    <br/>
+
+    <div id="theStartControls">
+      <button id="aboutGame">About the Game (*Start Here* Open the Console)</button>
+      <button id="resetButton">Reset Game</button>
+      <button id="shuffleButton">Shuffle the Deck</button>
+      <button id="dealButton" disabled>Deal a Hand</button>
+    </div>
+    <br>
+    <div id="theGameControls"></div>
+      <button id="card1Button" disabled>
+        Card1</button>
+      <button id="card2Button" disabled>
+        Card 2
+      </button>
+      <button id="card3Button" disabled>
+        Card 3
+      </button>
+      <button id="noTradeButton" disabled>
+        No Trade
+      </button>
+    
+
+  </div>
+
+  <script src="main.js">
+  </script>
+</body>
+
+</html>

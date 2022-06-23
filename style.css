@@ -1,0 +1,92 @@
+.the-controls {
+    text-align: center;
+  }
+  
+  .horizontal-line {
+    border: 2px solid yellow;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+  }
+  
+  .vertical-line {
+    border-left: 5px solid yellow;
+    height: 100px;
+    margin: 5px;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+  }
+  
+  .vertical-line2 {
+    border-left: 5px solid yellow;
+    height: 50px;
+    margin: 1px;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+  }
+  
+  .vertical-card {
+    display: inline-block;
+    text-align: center;
+    margin: 10px;
+    padding: 18px 15px 0 15px;
+    width: 40px;
+    height: 70px;
+    font-size: 20px;
+    background-color: white;
+    border: solid 1px black;
+  }
+  
+  body {
+    background-color: slategray;
+  }
+  
+  .flex-container {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    flex-flow: row wrap;
+    -webkit-flex-flow: row wrap;
+    justify-content: space-around;
+  }
+  
+  .gameName {
+    text-align: center;
+  }
+  
+  .Spades {
+    color: black;
+  }
+  
+  .Clubs {
+    color: black;
+  }
+  
+  .Hearts {
+    color: red;
+  }
+  
+  .Diamonds {
+    color: red;
+  }
+  
+  #middleBox {
+    background-color: slategray;
+    font-size: 20px;
+  }
+  
+  .suit {
+    border: none;
+  }
+  
+  .image {
+    border: none;
+  }
+  
+  /* .hidden {
+    visibility: hidden;
+  } */
