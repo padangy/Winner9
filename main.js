@@ -1,5 +1,6 @@
 let playerHand = [];
-let computerHand = []; 
+let computerHand = [];
+let theShoe = []
 
 let playerTotalValue = null;
 let computerTotalValue = null;
@@ -12,119 +13,114 @@ let computerGameWins = 0;
 
 let tradesLeft = 3;
 
-document.getElementById("aboutGame").addEventListener("click", explainTheGame);
-document.getElementById("resetButton").addEventListener("click", resetGame);
-document.getElementById("shuffleButton").addEventListener("click", createShoe);
-document.getElementById("dealButton").disabled = true;
+// document.getElementById("dialogbox").innerHTML = "~WELCOME TO WINNER 9~";
 
-document.getElementById("card1Button").disabled = true;
-document.getElementById("card2Button").disabled = true;
-document.getElementById("card3Button").disabled = true;
-document.getElementById("noTradeButton").disabled = true;
+initialize()
+function initialize() {
+  document.getElementById("aboutGame").addEventListener("click", explainTheGame);
+  document.getElementById("resetButton").addEventListener("click", resetGame);
+  document.getElementById("shuffleButton").addEventListener("click", createShoe);
+  document.getElementById("dealButton").disabled = true;
 
-document.querySelector('#showPlayerRoundsWon').innerHTML = `${playerRoundWins}`
-document.querySelector('#showComputerRoundsWon').innerHTML = `${computerRoundWins}`
+  document.getElementById("card1Button").disabled = true;
+  document.getElementById("card2Button").disabled = true;
+  document.getElementById("card3Button").disabled = true;
+  document.getElementById("noTradeButton").disabled = true;
 
-function explainTheGame() {
-  console.log("\n~WELCOME TO WINNER 9~");
-  console.log("To play baccarat, you must bet on a side, Player or Banker.");
-  console.log("The value of a hand is the sum of the cards.");
-  console.log("10, J, Q, and K are worth 0 points.");
-  console.log("A is 1 point, 2 is 2 points, 3 is 3 points, etc.");
-  console.log(
-    "The value of a hand is the LAST digit of the total of all the cards."
-  );
-  console.log("For example 9+8 is not 17, but instead 7");
-  console.log("Whichever side gets closest to 9, without going over wins!");
-  console.log("\n>>Let's start the game!<<");
-  console.log(">>Click the Shuffle the Deck button to shuffle the cards.");
-  console.log(">>Then click Deal a Hand.");
-  console.log(">>Good luck!");
+  document.querySelector('#showPlayerRoundsWon').innerHTML = `${playerRoundWins}`
+  document.querySelector('#showComputerRoundsWon').innerHTML = `${computerRoundWins}`
 }
 
-function createShoe() {
-  theShoe = [];
-  createTheShoe();
-  shuffleTheCards(theShoe);
+// Simple version of the casino baccarat card game that deals 3 cards to two Players (p-vs-computer) from one deck of 52 cards. This game is decided with 3 round wins, with tie rounds not counting. The winner for one round is whomever has their 3 cards add up to 9. 10-J-Q-K cards, and any value of 10 added up, have 0 point value. Ace has 1 point value. Every round, the Player can choose to trade one card that they have with the computer until the player is satisfied, up to a maximum of 3 trades per round.  9 being the highest, the highest value of the 3 cards' value wins. 
 
-  function card(name, suit, value, deck, image) {
+function explainTheGame() {
+  document.getElementById("text").innerHTML = "~WELCOME TO WINNER 9~<br /><br />Winner 9 is a simple version of the casino baccarat card game that deals 3 cards each to the PLAYER and the COMPUTER from one standard deck of 52 cards.<br />10, J, Q, and K are worth 0 points.<br />A is 1 point, 2 is 2 points, 3 is 3 points, etc.<br />The object of this game is to have the highest point value of a hand, which is 9 points.<br />The value of a hand is the sum of the 3 cards; the suit of the card does not matter.<br />For example: the value of the 10 + 8 + 8 is not 26, but has the point value of 6.<br /><br />This winner of this game is decided with 3 round wins, with tie rounds not counting.<br />Furthermore, for every round, the PLAYER can choose to trade any single card that they have with the COMPUTER until the player is satisfied, up to a maximum of 3 trades per round.<br /><br />>>Let's start the game!<<<br />>>Click the Shuffle the Deck button to shuffle the cards.<br />>>Then click Deal a Hand.<br />>>Good luck!"
+}
+
+class card {
+  constructor(name, suit, value, deck, image) {
     this.name = name;
     this.image = image;
     this.suit = suit;
     this.deck = deck;
     this.value = value > 10 ? 0 : value;
   }
+}
 
-  function createTheShoe() {
-    this.names = [
-      "Ace",
-      "Two",
-      "Three",
-      "Four",
-      "Five",
-      "Six",
-      "Seven",
-      "Eight",
-      "Nine",
-      "Ten",
-      "Jack",
-      "Queen",
-      "King"
-    ];
+function createShoe() {
+  theShoe = [];
+  createTheShoe();
+  shuffleTheCards(theShoe);
+}
+  
+function createTheShoe() {
+  const names = [
+    "Ace",
+    "Two",
+    "Three",
+    "Four",
+    "Five",
+    "Six",
+    "Seven",
+    "Eight",
+    "Nine",
+    "Ten",
+    "Jack",
+    "Queen",
+    "King"
+  ];
 
-    this.images = [
-      "A",
-      "2",
-      "3",
-      "4",
-      "5",
-      "6",
-      "7",
-      "8",
-      "9",
-      "10",
-      "J",
-      "Q",
-      "K"
-    ];
+  const images = [
+    "A",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "J",
+    "Q",
+    "K"
+  ];
 
-    this.suits = ["Spades", "Clubs", "Diamonds","Hearts"];
-    this.decks = 1;
-    if (theShoe.length === 0) {
-      for (let deck = 1; deck <= this.decks; deck++) {
-        for (let suit = 0; suit < suits.length; suit++) {
-          for (let name = 0; name < names.length; name++) {
-            theShoe.push(
-              new card(
-                this.names[name],
-                this.suits[suit],
-                name + 1,
-                deck,
-                this.images[name]
-              )
-            );
-          }
+  const suits = ["Spades", "Clubs", "Diamonds","Hearts"];
+  const decks = 1;
+  if (theShoe.length === 0) {
+    for (let deck = 0; deck < decks; deck++) {
+      for (let suit = 0; suit < suits.length; suit++) {
+        for (let name = 0; name < names.length; name++) {
+          theShoe.push(
+            new card(
+              names[name],
+              suits[suit],
+              name + 1,
+              deck,
+              images[name]
+            )
+          );
         }
       }
     }
   }
   return theShoe;
-  
+} 
 
-  function shuffleTheCards() {
-    for (let i = 0; i < 1000; i++) {
-      let location1 = Math.floor(Math.random() * theShoe.length);
-      let location2 = Math.floor(Math.random() * theShoe.length);
-      let temp = theShoe[location1];
-      theShoe[location1] = theShoe[location2];
-      theShoe[location2] = temp;
-    }
-    console.log("\n>>The cards are shuffled. Click on Deal a Hand to deal the cards.");
-    
-    document.getElementById("shuffleButton").disabled = true;
-    document.getElementById("dealButton").disabled = false;
-    document.getElementById("dealButton").addEventListener("click", dealAHand);
+function shuffleTheCards() {
+  for (let i = 0; i < 1000; i++) {
+    let location1 = Math.floor(Math.random() * theShoe.length);
+    let location2 = Math.floor(Math.random() * theShoe.length);
+    let temp = theShoe[location1];
+    theShoe[location1] = theShoe[location2];
+    theShoe[location2] = temp;
   }
+  document.getElementById("text").innerHTML = ">>The cards are shuffled. Click on Deal a Hand to deal the cards."
+  
+  document.getElementById("shuffleButton").disabled = true;
+  document.getElementById("dealButton").disabled = false;
+  document.getElementById("dealButton").addEventListener("click", dealAHand);
 }
 
 function dealAHand() {
@@ -134,8 +130,8 @@ function dealAHand() {
 }
 
 function clearTheTable() {
-  document.querySelector("#playerFirst .suit").textContent = '';
-  document.querySelector("#playerFirst .image").textContent = '';
+  document.querySelector("#playerFirst .suit").innerText = '';
+  document.querySelector("#playerFirst .image").innerText = '';
   document.querySelector("#playerSecond .suit").innerText = '';
   document.querySelector("#playerSecond .image").innerText = '';
   document.querySelector("#playerThird .suit").innerText = '';
@@ -201,7 +197,7 @@ function totalTheHands() {
 }
 
 function wantToTrade() {
-  console.log('\n>>Does PLAYER want to trade one card with the COMPUTER?\n>>Please select one of the buttons: Card 1, Card 2, Card 3, or No Trade.')
+  document.getElementById("text").innerHTML = '>>Does PLAYER want to trade one card with the COMPUTER?<br />>>Please select one of the buttons: Card 1, Card 2, Card 3, or No Trade.'
   document.getElementById("card1Button").disabled = false;
   document.getElementById("card2Button").disabled = false;
   document.getElementById("card3Button").disabled = false;
@@ -222,39 +218,39 @@ function tradeCard1() {
   let computerRandomCard = computerHand[randomNum]
 
   if(computerTotalValue >= 8) { // range 9-8
-    console.log('\n>>COMPUTER has a good hand and does not want to trade, sorry!')
-    roundCompareHandsFinal()
+    document.getElementById("text").innerHTML = '>>COMPUTER has a good hand and does not want to trade, sorry!'
+    setTimeout(roundCompareHandsFinal(), 5000);
   }
   else if(computerTotalValue === 7 || computerTotalValue === 6) { // range 7-6
     if(Math.random() < 0.75) {
       tradesLeft--;
       if(tradesLeft === 0) {
-        console.log('\n>>There are no trades left, let\'s see who won!')
-        roundCompareHandsFinal()
+        document.getElementById("text").innerHTML = '>>There are no trades left, let\'s see who won!'
+        setTimeout(roundCompareHandsFinal(), 5000);
       }
       else {
       computerHand.splice(randomNum, 1, storeCard1) // splice(specified index, deleting 1, insert card)
       playerHand.splice(0, 1, computerRandomCard)
-      console.log('\n>>COMPUTER trades one card with your Card 1!\n>>PLAYER has ' + tradesLeft + ' out of 3 trades left.')
-      showCards()
+      document.getElementById("text").innerHTML = '>>COMPUTER trades one card with your Card 1!<br />>>PLAYER has ' + tradesLeft + ' out of 3 trades left.'
+      setTimeout(showCards(), 5000);
       }
     }
     else {
-      console.log('\n>>COMPUTER has a good hand and does not want to trade, sorry!')
-      roundCompareHandsFinal()
+      document.getElementById("text").innerHTML = '>>COMPUTER has a good hand and does not want to trade, sorry!'
+      setTimeout(roundCompareHandsFinal(), 5000);
     }
   }
   else if(computerTotalValue <= 5) {
     tradesLeft--;
     if(tradesLeft === 0) {
-      console.log('\nThere are no trades left, let\'s see who won!')
-      roundCompareHandsFinal()
+      document.getElementById("text").innerHTML = '>>There are no trades left, let\'s see who won!'
+      setTimeout(roundCompareHandsFinal(), 5000);
     }
     else { // range 5-0
       computerHand.splice(randomNum, 1, storeCard1) // splice(specified index, deleting 1, insert card)
       playerHand.splice(0, 1, computerRandomCard)
-      console.log('\n>>COMPUTER trades one card with your Card 1!\n>>PLAYER has ' + tradesLeft + ' out of 3 trades left.')
-      showCards()
+      document.getElementById("text").innerHTML = '>>COMPUTER trades one card with your Card 1!<br />>>PLAYER has ' + tradesLeft + ' out of 3 trades left.'
+      setTimeout(showCards(), 5000);
     }
   }
 }
@@ -265,39 +261,39 @@ function tradeCard2() {
   let computerRandomCard = computerHand[randomNum]
 
   if(computerTotalValue >= 8) { // range 9-8
-    console.log('\n>>COMPUTER has a good hand and does not want to trade, sorry!')
-    roundCompareHandsFinal()
+    document.getElementById("text").innerHTML = '>>COMPUTER has a good hand and does not want to trade, sorry!'
+    setTimeout(roundCompareHandsFinal(), 5000);
   }
   else if(computerTotalValue === 7 || computerTotalValue === 6) { // range 7-6
     if(Math.random() < 0.75) {
       tradesLeft--;
       if(tradesLeft === 0) {
-        console.log('\nThere are no trades left, let\'s see who won!')
-        roundCompareHandsFinal()
+        document.getElementById("text").innerHTML = '>>There are no trades left, let\'s see who won!'
+        setTimeout(roundCompareHandsFinal(), 5000);
       }
       else {
       computerHand.splice(randomNum, 1, storeCard2) // splice(specified index, deleting 1, insert card)
       playerHand.splice(1, 1, computerRandomCard)
-      console.log('\n>>COMPUTER trades one card with your Card 2!\n>>PLAYER has ' + tradesLeft + ' out of 3 trades left.')
-      showCards()
+      document.getElementById("text").innerHTML = '>>COMPUTER trades one card with your Card 2!<br />>>PLAYER has ' + tradesLeft + ' out of 3 trades left.'
+      setTimeout(showCards(), 5000);
       }
     }
     else {
-      console.log('\n>>COMPUTER has a good hand and does not want to trade, sorry!')
-      roundCompareHandsFinal()
+      document.getElementById("text").innerHTML = '>>COMPUTER has a good hand and does not want to trade, sorry!'
+      setTimeout(roundCompareHandsFinal(), 5000);
     }
   }
   else if(computerTotalValue <= 5) {
     tradesLeft--;
     if(tradesLeft === 0) {
-      console.log('\nThere are no trades left, let\'s see who won!')
-      roundCompareHandsFinal()
+      document.getElementById("text").innerHTML = '>>There are no trades left, let\'s see who won!'
+      setTimeout(roundCompareHandsFinal(), 5000);
     }
     else { // range 5-0
       computerHand.splice(randomNum, 1, storeCard2) // splice(specified index, deleting 1, insert card)
       playerHand.splice(1, 1, computerRandomCard)
-      console.log('\n>>COMPUTER trades one card with your Card 2!\n>>PLAYER has ' + tradesLeft + ' out of 3 trades left.')
-      showCards()
+      document.getElementById("text").innerHTML = '>>COMPUTER trades one card with your Card 2!<br />>>PLAYER has ' + tradesLeft + ' out of 3 trades left.'
+      setTimeout(showCards(), 5000);
     }
   }
 }
@@ -308,39 +304,39 @@ function tradeCard3() {
   let computerRandomCard = computerHand[randomNum]
 
   if(computerTotalValue >= 8) { // range 9-8
-    console.log('\n>>COMPUTER has a good hand and does not want to trade, sorry!')
-    roundCompareHandsFinal()
+    document.getElementById("text").innerHTML = '>>COMPUTER has a good hand and does not want to trade, sorry!'
+    setTimeout(roundCompareHandsFinal(), 5000);
   }
   else if(computerTotalValue === 7 || computerTotalValue === 6) { // range 7-6
     if(Math.random() < 0.75) {
       tradesLeft--;
       if(tradesLeft === 0) {
-        console.log('\nThere are no trades left, let\'s see who won!')
-        roundCompareHandsFinal()
+        document.getElementById("text").innerHTML = '>>There are no trades left, let\'s see who won!'
+        setTimeout(roundCompareHandsFinal(), 5000);
       }
       else {
       computerHand.splice(randomNum, 1, storeCard3) // splice(specified index, deleting 1, insert card)
       playerHand.splice(2, 1, computerRandomCard)
-      console.log('\n>>COMPUTER trades one card with your Card 3!\n>>PLAYER has ' + tradesLeft + ' out of 3 trades left.')
-      showCards()
+      document.getElementById("text").innerHTML = '>>COMPUTER trades one card with your Card 3!<br />>>PLAYER has ' + tradesLeft + ' out of 3 trades left.'
+      setTimeout(showCards(), 5000);
       }
     }
     else {
-      console.log('\n>>COMPUTER has a good hand and does not want to trade, sorry!')
-      roundCompareHandsFinal()
+      console.log(document.getElementById("text").innerHTML = '>>COMPUTER has a good hand and does not want to trade, sorry!')
+      setTimeout(roundCompareHandsFinal(), 5000);
     }
   }
   else if(computerTotalValue <= 5) {
     tradesLeft--;
     if(tradesLeft === 0) {
-      console.log('\nThere are no trades left, let\'s see who won!')
-      roundCompareHandsFinal()
+      document.getElementById("text").innerHTML = '>>There are no trades left, let\'s see who won!'
+      setTimeout(roundCompareHandsFinal(), 5000);
     }
     else { // range 5-0
       computerHand.splice(randomNum, 1, storeCard3) // splice(specified index, deleting 1, insert card)
       playerHand.splice(2, 1, computerRandomCard)
-      console.log('\n>>COMPUTER trades one card with your Card 3!\n>>PLAYER has ' + tradesLeft + ' out of 3 trades left.')
-      showCards()
+      document.getElementById("text").innerHTML = '>>COMPUTER trades one card with your Card 3!<br />>>PLAYER has ' + tradesLeft + ' out of 3 trades left.'
+      setTimeout(showCards(), 5000);
     }
   }
 }
@@ -352,12 +348,12 @@ function switchShuffleDealButtons() {
 
 function checkForWinner() {
   if(playerRoundWins === 3) {
-    console.log('\n!!! PLAYER is the WINNER !!! \nCongratulations!!! Play again?')
+    document.getElementById("text").innerHTML = '!!! PLAYER is the WINNER !!! <br />Congratulations!!! Play again?'
     document.getElementById("resetButton").disabled = false;
     document.getElementById("shuffleButton").disabled = true;
   }
   else if(computerRoundWins === 3) { 
-    console.log('\n>>GAME OVER. COMPUTER is the Winner. Better luck next game!<<')
+    document.getElementById("text").innerHTML = '>>>GAME OVER. COMPUTER is the Winner. Better luck next game!<<<'
     document.getElementById("resetButton").disabled = false;
     document.getElementById("shuffleButton").disabled = true;
   }
@@ -370,24 +366,20 @@ function roundCompareHandsFinal() {
   document.getElementById("noTradeButton").disabled = true;
   if (playerTotalValue > computerTotalValue) {
     playerRoundWins++;
-    console.log('\n>>PLAYER wins the round!')
-    console.log('>>PLAYER has ' + playerTotalValue + ' and COMPUTER has ' + computerTotalValue + '. Nice work!')
-    console.log('>>PLAYER has won ' + playerRoundWins + ' of 3 rounds and COMPUTER has won ' + computerRoundWins + ' of 3 rounds. \n>>First to 3 wins the game!')
+    document.getElementById("text").innerHTML = '>>PLAYER wins the round!<br />>>PLAYER has ' + playerTotalValue + ' and COMPUTER has ' + computerTotalValue + '. Nice work!<br />>>PLAYER has won ' + playerRoundWins + ' of 3 rounds and COMPUTER has won ' + computerRoundWins + ' of 3 rounds.<br />>>First to 3 wins the game!'
     document.getElementById("shuffleButton").disabled = false;
     document.querySelector('#showPlayerRoundsWon').innerHTML = `${playerRoundWins}`
     tradesLeft = 3
-    checkForWinner()
+    setTimeout(checkForWinner(), 5000);
   } else if (playerTotalValue < computerTotalValue) {
     computerRoundWins++;
-    console.log('\n>>COMPUTER wins the round!')
-    console.log('>>COMPUTER has ' + computerTotalValue + ' and PLAYER has ' + playerTotalValue + '. Try again!')
-    console.log('>>COMPUTER has won ' + computerRoundWins + ' of 3 rounds and PLAYER has won ' + playerRoundWins + ' of 3 rounds. \n>>First to 3 wins the game!')
+    document.getElementById("text").innerHTML = '>>COMPUTER wins the round!<br />>>COMPUTER has ' + computerTotalValue + ' and PLAYER has ' + playerTotalValue + '. Try again!<br />>>PLAYER has won ' + playerRoundWins + ' of 3 rounds and COMPUTER has won ' + computerRoundWins + ' of 3 rounds.<br />>>First to 3 wins the game!'
     document.getElementById("shuffleButton").disabled = false;
     document.querySelector('#showComputerRoundsWon').innerHTML = `${computerRoundWins}`
     tradesLeft = 3
-    checkForWinner()
+    setTimeout(checkForWinner(), 5000);
   } else if (playerTotalValue === computerTotalValue) {
-    console.log('\n>>It\'s a TIE. The PLAYER and COMPUTER both have ' + playerTotalValue + '. Redoing this round.')
+    document.getElementById("text").innerHTML = '>>It\'s a TIE. The PLAYER and COMPUTER both have ' + playerTotalValue + '. Redoing this round.'
     document.getElementById("shuffleButton").disabled = false;
     document.getElementById("shuffleButton").addEventListener("click", switchShuffleDealButtons);
     tradesLeft = 3
@@ -415,5 +407,5 @@ function resetGame() {
   document.getElementById("card3Button").disabled = true;
   document.getElementById("noTradeButton").disabled = true;
   clearTheTable()
-  console.log('\n>>Winner 9 game has been reset.<<')
+  document.getElementById("text").innerHTML = '>>Winner 9 game has been reset.<<'
 }

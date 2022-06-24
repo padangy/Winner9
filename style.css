@@ -85,8 +85,24 @@
   
   .image {
     border: none;
+  }    
+
+  #theGameControls {
+    padding-bottom: 25px;
+    align-items: center;
   }
-  
+
+  #text {
+    align-items: center;
+    word-spacing: 0.2em;
+    margin: 0 auto;
+    background: white;
+    padding: 10px;
+    position: relative;
+    line-height: 1.2em;
+    width: 50%;
+  }
+
   /* .hidden {
     visibility: hidden;
   } */
