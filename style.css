@@ -51,7 +51,8 @@
     display: flex;
     flex-flow: row wrap;
     -webkit-flex-flow: row wrap;
-    justify-content: space-around;
+    justify-content: space-evenly;
+  
   }
   
   .gameName {
@@ -96,11 +97,12 @@
     align-items: center;
     word-spacing: 0.2em;
     margin: 0 auto;
-    background: white;
-    padding: 10px;
+    background: slategray;
+    padding: 0;
     position: relative;
     line-height: 1.2em;
     width: 50%;
+    text-align: center;
   }
 
   /* .hidden {
